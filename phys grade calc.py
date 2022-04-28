@@ -39,35 +39,50 @@ PH335=19
 PH338=76
 PH339=82*0.3
 
-est=44
 
-PH300a=9.5+(est*0.9)
-PH302a=26+(est*0.7)
-PH306a=30+(est*0.7)
-PH307a=84
-PH311a=8+(est*0.9)
-PH312a=66
-PH321a=25+(est*0.7)
-PH333a=(78*0.2)+(est*0.8)
-PH335a=19+(est*0.8)
-PH338a=76
-PH339a=(82*0.3)+(est*0.7)
+
 g2= [PH203,PH204,PH205,PH206,PH207,PH211,PH221,PH222,PH227,PH229,PH230,PH320]
 g2s=g2.sort(reverse=True)
 g3= [PH300,PH302,PH306,PH307,PH311,PH311,PH312,PH321,PH333,PH335,PH338,PH339]
 g3s=g3.sort(reverse=True)
-g3a= [PH300a,PH302a,PH306a,PH307a,PH311a,PH311a,PH312a,PH321a,PH333a,PH335a,PH338a,PH339a]
-g3sa=g3a.sort(reverse=True)
+
 
 l2=sum(g2[4:11]) / len(g2[4:11])
 u2=sum(g2[0:3]) / len(g2[0:3])
 l3=sum(g3[8:11]) / len(g3[8:11])
 u3=sum(g3[0:7]) / len(g3[0:7])
-l3a=sum(g3a[8:11]) / len(g3a[8:11])
-u3a=sum(g3a[0:7]) / len(g3a[0:7])
+
 
 current=((l2)+(u2+sum(g3[8:11]) / len(g3[8:11]))+((sum(g3[0:7]) / len(g3[0:7]))*3))/6
-currenta=((l2)+(u2+sum(g3a[8:11]) / len(g3a[8:11]))+((sum(g3a[0:7]) / len(g3a[0:7]))*3))/6
+
+boundry=68
+
+for est in range(1001,-1,-1):
+   
+   PH300a=9.5+((est/10)*0.9)
+   PH302a=26+((est/10)*0.7)
+   PH306a=30+((est/10)*0.7)
+   PH307a=84
+   PH311a=8+((est/10)*0.9)
+   PH312a=66
+   PH321a=25+((est/10)*0.7)
+   PH333a=(78*0.2)+((est/10)*0.8)
+   PH335a=19+((est/10)*0.8)
+   PH338a=76
+   PH339a=(82*0.3)+((est/10)*0.7)
+   
+   g3a= [PH300a,PH302a,PH306a,PH307a,PH311a,PH311a,PH312a,PH321a,PH333a,PH335a,PH338a,PH339a]
+   g3sa=g3a.sort(reverse=True)
+   l3a=sum(g3a[8:11]) / len(g3a[8:11])
+   u3a=sum(g3a[0:7]) / len(g3a[0:7])
+   currenta=((l2)+(u2+sum(g3a[8:11]) / len(g3a[8:11]))+((sum(g3a[0:7]) / len(g3a[0:7]))*3))/6
+   if est/10 >= 100:
+       esta=est/10
+       fcurrent=currenta
+   else:
+       if currenta >= boundry:
+           esta=est/10
+           fcurrent=currenta
 
 unweight=((sum(g2) / len(g2))+(sum(g3) / len(g3)))/2
 unweighta=((sum(g2) / len(g2))+(sum(g3a) / len(g3a)))/2
@@ -128,7 +143,7 @@ plt.plot(u3,l3, 'bo')
 plt.text(u3+1,l3, 'Current Third Year Grade ('+str(round(u3,1))+', '+str(round(l3,1))+ ')')
 plt.ylim(-1,80)
 plt.xlim(u3-20,100)
-plt.title('Current Grade - '+str(round(current,1))+'% , Assuming ' +str(est)+'% In Ungraded Work- '+str(round(currenta,1))+'%')
+plt.title('Current Grade - '+str(round(current,1))+'% , Assuming ' +str(round(esta,1))+'% In Ungraded Work- '+str(round(fcurrent,1))+'%')
 plt.grid()
 plt.locator_params(axis="x", nbins=20)
 plt.locator_params(axis="y", nbins=20)
