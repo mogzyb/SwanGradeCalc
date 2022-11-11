@@ -27,17 +27,17 @@ PH229=68
 PH230=63
 PH320=80
 
-PH300=9.5
+PH300=74
 PH302=26
 PH306=30
 PH307=84
-PH311=8
+PH311=70
 PH312=66
 PH321=25
-PH333=78*0.2
-PH335=19
+PH333=69
+PH335=81
 PH338=76
-PH339=82*0.3
+PH339=78
 
 
 
@@ -47,35 +47,35 @@ g3= [PH300,PH302,PH306,PH307,PH311,PH311,PH312,PH321,PH333,PH335,PH338,PH339]
 g3s=g3.sort(reverse=True)
 
 
-l2=sum(g2[4:11]) / len(g2[4:11])
-u2=sum(g2[0:3]) / len(g2[0:3])
-l3=sum(g3[8:11]) / len(g3[8:11])
-u3=sum(g3[0:7]) / len(g3[0:7])
+l2=sum(g2[4:12]) / len(g2[4:12])
+u2=sum(g2[0:4]) / len(g2[0:4])
+l3=sum(g3[8:12]) / len(g3[8:12])
+u3=sum(g3[0:8]) / len(g3[0:8])
 
 
-current=((l2)+(u2+sum(g3[8:11]) / len(g3[8:11]))+((sum(g3[0:7]) / len(g3[0:7]))*3))/6
+current=((l2)+(u2+(sum(g3[8:12]) / len(g3[8:12])))+((sum(g3[0:8]) / len(g3[0:8]))*3))/6
 
-boundry=68
+boundry=70
 
 for est in range(1001,-1,-1):
    
-   PH300a=9.5+((est/10)*0.9)
-   PH302a=26+((est/10)*0.7)
-   PH306a=30+((est/10)*0.7)
-   PH307a=84
-   PH311a=8+((est/10)*0.9)
-   PH312a=66
-   PH321a=25+((est/10)*0.7)
-   PH333a=(78*0.2)+((est/10)*0.8)
-   PH335a=19+((est/10)*0.8)
-   PH338a=76
-   PH339a=(82*0.3)+((est/10)*0.7)
+   PH300a=PH300
+   PH302a=PH302+((est/10)*0.70)
+   PH306a=PH306+((est/10)*0.70)
+   PH307a=PH307
+   PH311a=PH311
+   PH312a=PH312
+   PH321a=PH321+((est/10)*0.70)
+   PH333a=PH333
+   PH335a=PH335
+   PH338a=PH338
+   PH339a=PH339
    
    g3a= [PH300a,PH302a,PH306a,PH307a,PH311a,PH311a,PH312a,PH321a,PH333a,PH335a,PH338a,PH339a]
    g3sa=g3a.sort(reverse=True)
-   l3a=sum(g3a[8:11]) / len(g3a[8:11])
-   u3a=sum(g3a[0:7]) / len(g3a[0:7])
-   currenta=((l2)+(u2+sum(g3a[8:11]) / len(g3a[8:11]))+((sum(g3a[0:7]) / len(g3a[0:7]))*3))/6
+   l3a=sum(g3a[8:12]) / len(g3a[8:12])
+   u3a=sum(g3a[0:8]) / len(g3a[0:8])
+   currenta=((l2)+(u2+sum(g3a[8:12]) / len(g3a[8:12]))+((sum(g3a[0:8]) / len(g3a[0:8]))*3))/6
    if est/10 >= 100:
        esta=est/10
        fcurrent=currenta
@@ -141,8 +141,10 @@ plt.plot(u2, l2, 'bo')
 plt.text(u2+1, l2, 'Second Year ('+str(round(u2,1))+', '+str(round(l2,1))+ ')')
 plt.plot(u3,l3, 'bo')
 plt.text(u3+1,l3, 'Current Third Year Grade ('+str(round(u3,1))+', '+str(round(l3,1))+ ')')
+plt.plot((uf+u1+u2+u3)/4,(lf+l1+l2+l3)/4, 'bo')
+plt.text((uf+u1+u2+u3)/4 +1, (lf+l1+l2+l3)/4 +1, 'Unweighted average ('+str(round((uf+u1+u2+u3)/4,1))+', '+str(round((lf+l1+l2+l3)/4,1))+ ')')
 plt.ylim(-1,80)
-plt.xlim(u3-20,100)
+plt.xlim(30,100)
 plt.title('Current Grade - '+str(round(current,1))+'% , Assuming ' +str(round(esta,1))+'% In Ungraded Work- '+str(round(fcurrent,1))+'%')
 plt.grid()
 plt.locator_params(axis="x", nbins=20)
